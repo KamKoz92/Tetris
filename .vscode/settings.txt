@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "memory": "cpp",
+        "string": "cpp",
+        "new": "cpp",
+        "tuple": "cpp"
+    },
+    "githubPullRequests.showInSCM": true
+}
