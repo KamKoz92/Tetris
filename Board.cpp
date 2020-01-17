@@ -281,7 +281,7 @@ void Board::rotateElement(int side)
             Vr[0] = activeBlock[i].first - activeBlock[pivotBlock].first; //-1
             Vr[1] = activeBlock[i].second - activeBlock[pivotBlock].second; //0
 
-            if(side == 0) // possible error with left and right inverse tables // sise is always 1 atm;
+            if(side == 0)
             {
                 Vt[0] = leftInverse[0][0] * Vr[0] + leftInverse[0][1] * Vr[0];
                 Vt[1] = leftInverse[1][0] * Vr[1] + leftInverse[1][1] * Vr[1];
