@@ -22,6 +22,7 @@ private:
     Board board;
     vector< pair<int,int> > activeBlock;
     int random{0};
+    int currBlockType;
 
 
 public:
@@ -41,7 +42,6 @@ public:
     void drawElement();
     void countDown();
     bool moveElement(int dir);
-    void rotateElement();
     void start();
     void hideOldElement();
     void redrawBoard(int row, int length);

@@ -122,6 +122,18 @@ bool Board::newBlock(int random)
         activeBlock[3].first = 5;
         activeBlock[3].second = 1;
         break;
+    case 4:
+        // 000
+        //  0
+        activeBlock[0].first = 3;
+        activeBlock[0].second = 0;
+        activeBlock[1].first = 4;
+        activeBlock[1].second = 0;
+        activeBlock[2].first = 5;
+        activeBlock[2].second = 0;
+        activeBlock[3].first = 4;
+        activeBlock[3].second = 1;
+        break;
     default:
         cout << "Wrong block set type" << endl;
         break;
@@ -203,7 +215,6 @@ bool Board::checkIfMoveable(int dir)
 }
 pair<int, int> Board::activeToPassive()
 {
-    // partialy checked
     int row = 0;
     int length = 0;
     int temp = 0;
@@ -265,23 +276,21 @@ void Board::rotateElement(int side)
 
     for (int i = 0; i < 4; i++)
     {
-        cout << activeBlock[i].first << ' ' << activeBlock[i].second << endl;
         if (i != pivotBlock)
         {
             Vr[0] = activeBlock[i].first - activeBlock[pivotBlock].first; //-1
             Vr[1] = activeBlock[i].second - activeBlock[pivotBlock].second; //0
 
-            if(side == 1)
+            if(side == 0)
             {
                 Vt[0] = leftInverse[0][0] * Vr[0] + leftInverse[0][1] * Vr[0];
                 Vt[1] = leftInverse[1][0] * Vr[1] + leftInverse[1][1] * Vr[1];
             }
             else
             {
-                Vt[0] = rightInverse[0][0] * Vr[0] + leftInverse[0][1] * Vr[0];
-                Vt[1] = rightInverse[1][0] * Vr[1] + leftInverse[1][1] * Vr[1];
+                Vt[0] = rightInverse[0][0] * Vr[0] + rightInverse[0][1] * Vr[0];
+                Vt[1] = rightInverse[1][0] * Vr[1] + rightInverse[1][1] * Vr[1];
             }  
-            cout << Vr[0] << ' ' << Vr[1] << "  " << Vt[0] << ' ' << Vt[1] << endl;
 
             newBlock[i].first = activeBlock[pivotBlock].first + Vt[1];
             newBlock[i].second = activeBlock[pivotBlock].second + Vt[0]; 
@@ -292,10 +301,51 @@ void Board::rotateElement(int side)
             newBlock[i].second = activeBlock[pivotBlock].second;
         }
     }
-    cout << endl;
-    for(int i =0; i<4;i++)
+
+    int noPossibleRotation = 0;
+    // int rotationOffset = 0;
+    // for(int i = 0; i < 4; i++)
+    // {
+    //     if(!ifSquareFree(newBlock[i].first, newBlock[i].second))
+    //     {
+    //         rotationOffset = -1;
+    //         for(int k = 0; k < 4; k++)
+    //         {
+    //             if(!ifSquareFree(newBlock[i].first-1, newBlock[i].second))
+    //             {   
+    //                 rotationOffset = 1;
+    //                 for(int l = 0; l < 4; l++)
+    //                 {
+    //                     if(!ifSquareFree(newBlock[i].first+1, newBlock[i].second))
+    //                     {
+    //                         rotationOffset = 0;
+    //                         noPossibleRotation = 1;
+    //                         break;   
+    //                     }
+    //                 }
+    //                 break;
+    //             }
+    //         }
+    //         break;
+    //     }
+    // }
+    for (int i = 0; i < 4; i++)
     {
-        activeBlock[i] = newBlock[i];
-        cout << activeBlock[i].first << ' ' << activeBlock[i].second << endl;
+        if (!ifSquareFree(newBlock[i].first, newBlock[i].second))
+        {
+            noPossibleRotation = 1;
+            break;
+        }
     }
+
+    if(!noPossibleRotation)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            // activeBlock[i].first += rotationOffset;
+            // activeBlock[i].second += rotationOffset;
+            activeBlock[i] = newBlock[i];
+        }
+    } 
+    //return !noPossibleRotation; possible improvment
 }

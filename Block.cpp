@@ -27,10 +27,17 @@ Block::Block()
     0, 1, 1, 0, 
     0, 0, 1, 0,
     0, 0, 0, 0});
+
+    blocks[4] = unique_ptr<int[]>(new int[16]
+    {0, 0, 1, 0, 
+    0, 1, 1, 0, 
+    0, 0, 1, 0,
+    0, 0, 0, 0});
+
 }
 int* Block::getBlock(int i)
 {
-    if(i < 4 && i >=0)
+    if(i < 5 && i >=0)
     {
         return blocks[i].get();
     }

@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     {
         cout << "SDL initialization failed." << endl;
     }
+    
     screen.start();
     while (!variables.flag)
     {

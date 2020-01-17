@@ -149,9 +149,10 @@ void Screen::setInterface()
 }
 void Screen::start()
 {
-    int tmpRandom = 3; //rand() % 4;
-    random = 3;        //rand() % 4;
+    int tmpRandom = rand() % 5; //rand() % 5;
+    random = rand() % 5;        //rand() % 5;
     updateScore();
+    currBlockType = tmpRandom;
     updateNextBlockTab(tmpRandom);
     board.newBlock(tmpRandom);
     countDown();
@@ -215,6 +216,9 @@ void Screen::updateNextBlockTab(int random)
         break;
     case 3:
         rBlock = blockSet.getBlock(3);
+        break;
+    case 4:
+        rBlock = blockSet.getBlock(4);
         break;
     default:
         cout << "Wrong block set type" << endl;
@@ -296,7 +300,8 @@ bool Screen::moveElement(int dir)
                 updateScore();
                 if (board.newBlock(random))
                 {
-                    random = 3; //rand() % 4;
+                    currBlockType = random;
+                    random = rand() % 5; //rand() % 5;
                     updateNextBlockTab(random);
                     drawElement();
                 }
@@ -318,11 +323,14 @@ bool Screen::moveElement(int dir)
     }
     else
     {
-        hideOldElement();
-        board.rotateElement(1);
-        drawElement();   
+        //possible improvmnt of not drawing again if noPossibleRotation
+        if(currBlockType != 0)
+        {
+            hideOldElement();
+            board.rotateElement(dir-4);
+            drawElement(); 
+        }     
     }
-    
     return 1;
 }
 void Screen::hideOldElement()
